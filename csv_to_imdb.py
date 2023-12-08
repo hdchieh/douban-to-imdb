@@ -13,7 +13,7 @@ from selenium.common.exceptions import NoSuchElementException
 def login():
     driver = webdriver.Chrome()
     driver.get('https://www.imdb.com/registration/signin')
-    element = driver.find_element_by_id('signin-perks')
+    element = driver.find_element(By.ID, 'signin-perks')
     driver.execute_script("arguments[0].setAttribute('style', 'color: red;font-size: larger; font-weight: 700;')",
                           element)
     driver.execute_script("arguments[0].innerText = '请登录自己的IMDB账号, 程序将等待至登录成功。'", element)
@@ -50,15 +50,15 @@ def mark(is_unmark=False, rating_ajust=-1):
                 continue
 
             WebDriverWait(driver, 60).until(EC.presence_of_element_located((By.ID, 'suggestion-search')))
-            search_bar = driver.find_element_by_id('suggestion-search')
+            search_bar = driver.find_element(By.ID, 'suggestion-search')
             search_bar.send_keys(imdb_id)
             search_bar.submit()
             time.sleep(3)
             try:
                 if is_unmark:
-                    driver.find_element_by_xpath('//div[@data-testid="hero-rating-bar__user-rating__score"]')
+                    driver.find_element(By.XPATH, '//div[@data-testid="hero-rating-bar__user-rating__score"]')
                 else:
-                    driver.find_element_by_xpath('//div[@data-testid="hero-rating-bar__user-rating"]')
+                    driver.find_element(By.XPATH, '//div[@data-testid="hero-rating-bar__user-rating"]')
             except NoSuchElementException:
                 if is_unmark:
                     never_marked.append(f'{movie_name}({imdb_id})')
@@ -71,10 +71,10 @@ def mark(is_unmark=False, rating_ajust=-1):
                 WebDriverWait(driver, 10).until(
                     EC.element_to_be_clickable((By.XPATH, rate_btn_xpath))
                 )
-                driver.find_element_by_xpath(rate_btn_xpath).click()
+                driver.find_element(By.XPATH, rate_btn_xpath).click()
 
                 if is_unmark:
-                    driver.find_element_by_xpath("//div[@class='ipc-starbar']/following-sibling::button[2]").click()
+                    driver.find_element(By.XPATH, "//div[@class='ipc-starbar']/following-sibling::button[2]").click()
                     print(f'电影删除打分成功：{movie_name}({imdb_id})')
                     success_unmarked += 1
                 else:
@@ -84,11 +84,11 @@ def mark(is_unmark=False, rating_ajust=-1):
                     WebDriverWait(driver, 3).until(
                         EC.visibility_of_element_located((By.XPATH, star_ele_xpath))
                     )
-                    star_ele = driver.find_element_by_xpath(star_ele_xpath)
+                    star_ele = driver.find_element(By.XPATH, star_ele_xpath)
                     mark_action = ActionChains(driver).move_to_element(star_ele).click()
                     mark_action.perform()
                     confirm_rate_ele_xpath = "//div[@class='ipc-starbar']/following-sibling::button"
-                    driver.find_element_by_xpath(confirm_rate_ele_xpath).click()
+                    driver.find_element(By.XPATH, confirm_rate_ele_xpath).click()
                     print(f'电影打分成功：{movie_name}({imdb_id}) → {movie_rate}★')
                     success_marked += 1
             time.sleep(1)
