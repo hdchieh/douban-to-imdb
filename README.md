@@ -1,3 +1,8 @@
+更简单的方式是使用 `豆坟` 与 `IMDB List Importer` in greasyfork.
+
+
+---
+
 # douban-to-imdb
 
 &ensp;&ensp;&ensp;&ensp;最近发现 Apple Tv上的 Infuse里可以关联 Trakt显示出自己的观看记录，但是我之前的观看记录全部在豆瓣里，所以 Trakt上显示的数字全部是 0，之后的观看 Infuse会自动同步，但是之前的观看就需要自己导入一下了。找了 GitHub之后决定先把豆瓣的评分导入到 IMDB，然后再把 IMDB导出的 CSV文件用别人写好的另外一个程序导入到 Trakt。豆瓣导入 IMDB时决定只导入评分不导入任何评价，毕竟评价都是中文的评价，导入到 IMDB也没有多大意义，就让它们留在豆瓣吧。
@@ -24,7 +29,7 @@
 
 #### 导出豆瓣电影评分到 CSV文件
 
-    $ python douban_to_csv.py <user_id> [yyyymmdd] 
+    $ python douban_to_csv.py chou96 20130901
     
 *`[user_id]`为豆瓣的用户 ID，查找方法参见：[如何查找自己的豆瓣 ID](#如何查找自己的豆瓣-ID)*
 
@@ -75,6 +80,11 @@
 &ensp;&ensp;&ensp;&ensp; 先登录自己的豆瓣账号，然后点击右上角的名字，打开[个人主页](https://www.douban.com/mine/)，就在跳转到的URL里：https://www.douban.com/people/[这里的数字就是你的user_id]/
 
 ## 感谢
+
+* 导出豆瓣电影评分部分的逻辑直接复制了 @IvanWoo的 [douban-exporter-lite](https://github.com/IvanWoo/douban-exporter-lite)，在此感谢。
+
+* 导入到Trakt部分使用了 @damienhaynes的 [TraktRater](https://github.com/damienhaynes/TraktRater)，在此感谢。
+~~
 
 * 导出豆瓣电影评分部分的逻辑直接复制了 @IvanWoo的 [douban-exporter-lite](https://github.com/IvanWoo/douban-exporter-lite)，在此感谢。
 
